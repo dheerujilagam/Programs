@@ -1,0 +1,157 @@
+home.js ->
+
+import React, { useState } from 'react';
+import axios from 'axios';
+
+export default function Home() {
+    const [msg, setMsg] = useState({});
+    const handleChange = (e) => {
+        setMsg({...msg,[e.target.name]:e.target.value});
+    }
+    let submit = async (e) => {
+        e.preventDefault();
+        try {
+            alert('Submitted..!')
+            await axios.post('http://localhost:8000', {
+                msg,
+            })
+        } catch (e) {
+            console.log(e);
+        }
+        console.log(msg)
+    };
+    return (
+        <div className='cont'>
+            <form method='POST'>
+                <label htmlFor='name'>Name : </label>
+                <input
+                    name='name'
+                    onChange={handleChange}
+                    placeholder='Enter Name'
+                    required
+                /><br/><br/> 
+                <label htmlFor='age'>Age : </label>
+                <input
+                    name='age'
+                    onChange={handleChange}
+                    placeholder='Enter age'
+                    required
+                /><br/><br/>
+                <label htmlFor='gender'>Gender : </label>
+                <select name="gender" onChange={handleChange} required>
+                    <option value="empty">Select Gender</option>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                    <option value="other">Other</option>
+                </select><br/><br/>
+                <label htmlFor='phno'>Mobile Number : </label>
+                <input
+                    name='phno'
+                    onChange={handleChange}
+                    placeholder='Enter number'
+                /><br/><br/>
+                <label htmlFor='blood'>Blood Group : </label>
+                <select name="blood" onChange={handleChange} required>
+                    <option value="empty">Select Blood Group</option>
+                    <option value="A+">A+</option>
+                    <option value="A-">A-</option>
+                    <option value="B+">B+</option>
+                    <option value="B-">B-</option>
+                    <option value="AB+">AB+</option>
+                    <option value="AB-">AB-</option>
+                    <option value="O+">O+</option>
+                    <option value="O-">O-</option>
+                </select><br/><br/>
+                <label htmlFor='disease'>Diseases : </label>
+                <input
+                    name='disease'
+                    onChange={handleChange}
+                    placeholder='Enter disease'
+                /><br/><br/>
+                <label htmlFor='tattoo'>Tattoo : </label>
+                <select name="tattoo" onChange={handleChange} required>
+                    <option value="empty">Tattoo before 6 months</option>
+                    <option value="Yes">Yes</option>
+                    <option value="No">No</option>
+                </select><br/><br/>
+                <input type='button' onClick={submit} value='submit'/>
+            </form>
+        </div>
+    );
+}
+
+------------------------------------------------------------------------------
+
+mongo.js ->
+
+const mongoose = require('mongoose');
+
+mongoose.connect('mongodb://localhost:27017/hopeline')
+.then( () => {
+    console.log('Connected');
+})
+.catch( () => {
+    console.log('Falied');
+}) 
+
+const newSchema =  new mongoose.Schema({
+    name: {
+        type : String,
+        required : true   
+    },
+    age: {
+        type : Number,
+        required : true   
+    },
+    gender: {
+        type : String,
+        required : true   
+    },
+    phno: {
+        type : Number,
+        required : true   
+    },
+    blood: {
+        type : String,
+        required : true   
+    },
+    disease: {
+        type : String,
+        required : true   
+    },
+    tattoo: {
+        type : String,
+        required : true
+    }
+});
+
+const collection = mongoose.model('collection', newSchema);
+
+module.exports = collection;
+
+----------------------------------------------------------------
+
+server.js ->
+
+const express = require('express');
+const collection = require('./mongo');
+const app = express();
+const cors = require('cors');
+
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(cors());
+
+app.get('/', cors(), (req, res) => {
+  
+});
+
+app.post('/', async (req, res) => {
+  const { msg } = req.body;
+  console.log(msg);
+  await collection.insertMany([msg]);
+});
+
+app.listen(8000, () => {
+  console.log('connected');
+});

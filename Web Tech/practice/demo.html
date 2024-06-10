@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        /* body {
+            background-image: url('https://images.pexels.com/photos/255379/pexels-photo-255379.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500');
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-size: cover;
+        } */
+        p{
+            background-color: aquamarine;
+        }
+        body{
+            background: url("got2.jpg");
+        }
+        @media screen and (min-width: 400px) and (max-width: 600px) {
+            p {
+                background-color: aqua;
+            }
+            body{
+                background: url("got1.jpg");
+            }
+        }
+        table, th, td {
+            border: 1px solid black;
+            border-style: riged;
+            border-collapse: collapse;
+            border-color: green;
+        }
+        th, td{
+            text-align: center;
+            /* background-color: aquamarine; */
+            padding: 10px;
+        }
+        tr:hover{
+            background-color: aquamarine;
+        }
+    </style>
+</head>
+<body>
+    <p>
+        Set the background-size property to "cover" and the background image will cover the entire element, in this case the body element.
+    </p>
+    <!-- <picture>
+        <source media="(min-width: 650px)" srcset="D:\Images\got4.jpg">
+        <source media="(min-width: 465px)" srcset="D:\Images\got4.jpg">
+        <img src="D:\Images\got1.jpg" style="width:auto;">
+    </picture> -->
+    <table style="width: 30%">
+        <colgroup>
+            <col span="2">
+            <col span="1" style="visibility: collapse">
+          </colgroup>
+        <tr>
+            <th>Course</th>
+            <th colspan="2">Mentor</th>
+        </tr>
+        <tr>
+            <td>MERN</td>
+            <td>DSP sir</td>
+            <td>Eswar</td>
+        </tr>
+        <tr>
+            <td>Android</td>
+            <td>Vasanth sir</td>
+            <td>Nani</td>
+        </tr>
+    </table>
+    <iframe name="frame_a" height="500px" width="500px" title="iframe_example"></iframe>
+    <p><a href ="https://leetcode.com/Subhash_2707/" target="frame_a">leetcode</a></p>
+</body>
+</html>
